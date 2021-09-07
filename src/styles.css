@@ -2,16 +2,25 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+.ag-tool-panel-wrapper .ag-react-container {
+    width: 100%;
+}
+
 form {
     background: lightgrey;
     padding: 20px;
-    margin: 10px;
-    border-radius: 10px;
-    border: 3px solid dodgerblue;
+    /* margin: 10px; */
+    /* border-radius    : 10px; */
+    /* border: 3px solid dodgerblue; */
+    width: 100%;
 }
 
 .my-form-control {
     margin: 10px 0;
+}
+
+.my-form-control div {
+    margin: 15px 0;
 }
 
 .my-form-control select, .my-form-control input {

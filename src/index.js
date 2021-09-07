@@ -23,10 +23,17 @@ import './styles.css'
 
 const capatalise = str => str[0].toUpperCase() + str.slice(1);
 
-const FilterPanel = props => {
+const OrFilterPanel = props => {
+  console.log('panel props', props);
   const [valuesMaps, setValueMaps] = useState(null);
   const [selectedValuesMap, setSelectedValuesMap] = useState(null);
   const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    console.log('********************************************');
+    console.log('*********** filter panel mounted ***********');
+    console.log('********************************************');
+  }, [])
 
   useEffect(() => {
     if (props.columnDefs && props.columnDefs.length > 0) {
@@ -59,7 +66,7 @@ const FilterPanel = props => {
       return;
     }
     updatedSelectedValuesMap[field].push(value);
-    setSelectedValuesMap(updatedSelectedValuesMap);
+    // setSelectedValuesMap(updatedSelectedValuesMap);
 
   }
 
@@ -89,24 +96,26 @@ const FilterPanel = props => {
       </div>
       <hr></hr>
       {props.columnDefs.map(({ field }) => (
-        <div className="my-form-control">
+        <div className="my-form-control" key={field}>
           <label for={field}>{capatalise(field)}</label>
           <select id={field} name={field} onChange={changeHandler}>
             <option value="none" selected disabled hidden></option>
             {valuesMaps && Array.from(valuesMaps[field]).map(value => (
-              <option value={value}>{value}</option>
+              <option value={value} key={value}>{value}</option>
             ))}
           </select>
-          {
-            selectedValuesMap && selectedValuesMap[field].map(value => (
-              <span className="selected-value">
-                {value}
-                <span className="remove-value" onClick={() => clearSelectedValue(field, value)}>
-                  x
+          <div>
+            {
+              selectedValuesMap && selectedValuesMap[field].map(value => (
+                <span className="selected-value" key={value}>
+                  {value}
+                  <span className="remove-value" onClick={() => clearSelectedValue(field, value)}>
+                    x
+                  </span>
                 </span>
-              </span>
-            ))
-          }
+              ))
+            }
+          </div>
         </div>
       ))}
       <button type="submit">Apply Or Filter</button>
@@ -151,23 +160,27 @@ const GridExample = () => {
   const applyFilter = ({ selectedValuesMap, search }) => {
     console.log('fo', search, selectedValuesMap);
 
+    // || (value && value.toString().includes(search))
+
     let updatedFilteredRowData = rowData
       .map(row => ({ ...row }))
       .filter(row => {
         return Object.entries(row).some(([field, value]) => {
-          return selectedValuesMap[field].some(selectedValue => selectedValue == value) || (value && value.toString().includes(search))
+          return selectedValuesMap[field].some(selectedValue => selectedValue == value)
         });
       });
     console.log('newrow data for grid', updatedFilteredRowData);
     setFilteredRowData(updatedFilteredRowData);
   }
 
+
   return (
     <div style={{ width: '100%', height: '100vh' }}>
-      <FilterPanel
+      {/* <FilterPanel
         columnDefs={columnDefs}
         rowData={rowData}
-        applyFilter={applyFilter} />
+        applyFilter={applyFilter} /> */}
+      <button onClick={() => setRowData([])}>Updating row data closes the filter panel (setRowData([]))</button>
       <div
         id="myGrid"
         style={{
@@ -186,6 +199,44 @@ const GridExample = () => {
           enableRangeSelection={true}
           onGridReady={onGridReady}
           rowData={filteredRowData}
+          icons={{
+            'custom-stats':
+              '<span className="ag-icon ag-icon-custom-stats"></span>',
+          }}
+          sideBar={{
+            toolPanels: [
+              // {
+              //   id: 'columns',
+              //   labelDefault: 'Columns',
+              //   labelKey: 'columns',
+              //   iconKey: 'columns',
+              //   toolPanel: 'agColumnsToolPanel',
+              // },
+              {
+                id: 'or-filters',
+                labelDefault: 'OR-filters',
+                labelKey: 'or-filters',
+                iconKey: 'filter',
+                toolPanel: 'orFilterPanel',
+                toolPanelParams: {
+                  columnDefs: columnDefs,
+                  rowData: rowData,
+                  applyFilter: applyFilter,
+                }
+              },
+              {
+                id: 'and-filters',
+                labelDefault: 'AND-filters',
+                labelKey: 'and-filters',
+                iconKey: 'filter',
+                toolPanel: 'agFiltersToolPanel',
+              },
+
+            ],
+            defaultToolPanel: 'or-filters',
+          }}
+          frameworkComponents={{ orFilterPanel: OrFilterPanel }}
+
         />
       </div>
     </div>
