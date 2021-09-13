@@ -19,7 +19,16 @@ import './styles.css'
 //   <div id="filtered-countries">
 //     <div><span>Afganistan</span><span onclick="remove()">x</span></div>
 //   </div>
-// </div> 
+// </div>   
+
+// const OrFilterPanel = props => {
+//   useEffect(() => {
+//     console.log('********************************************');
+//     console.log('*********** filter panel mounted ***********');
+//     console.log('********************************************');
+//   }, [])
+//   return <h1>OR FILTER PANEL</h1>
+// }
 
 const capatalise = str => str[0].toUpperCase() + str.slice(1);
 
@@ -27,7 +36,6 @@ const OrFilterPanel = props => {
   console.log('panel props', props);
   const [valuesMaps, setValueMaps] = useState(null);
   const [selectedValuesMap, setSelectedValuesMap] = useState(null);
-  const [search, setSearch] = useState('');
 
   useEffect(() => {
     console.log('********************************************');
@@ -66,7 +74,7 @@ const OrFilterPanel = props => {
       return;
     }
     updatedSelectedValuesMap[field].push(value);
-    // setSelectedValuesMap(updatedSelectedValuesMap);
+    setSelectedValuesMap(updatedSelectedValuesMap);
 
   }
 
@@ -80,21 +88,13 @@ const OrFilterPanel = props => {
   const formSubmitHandler = e => {
     e.preventDefault();
     console.log('applyingFilter...')
-    props.applyFilter({
-      selectedValuesMap,
-      search
-    });
+    props.applyFilter(selectedValuesMap);
     return false;
   }
 
   return (
     <form onSubmit={formSubmitHandler} >
       <h3>Or Filter Panel</h3>
-      <div className="my-form-control">
-        <label for='search'>Search</label>
-        <input id="search" value={search} onChange={e => setSearch(e.target.value)} />
-      </div>
-      <hr></hr>
       {props.columnDefs.map(({ field }) => (
         <div className="my-form-control" key={field}>
           <label for={field}>{capatalise(field)}</label>
@@ -157,8 +157,8 @@ const GridExample = () => {
       });
   };
 
-  const applyFilter = ({ selectedValuesMap, search }) => {
-    console.log('fo', search, selectedValuesMap);
+  const applyFilter = (selectedValuesMap) => {
+    console.log('fo', selectedValuesMap);
 
     // || (value && value.toString().includes(search))
 
@@ -176,10 +176,10 @@ const GridExample = () => {
 
   return (
     <div style={{ width: '100%', height: '100vh' }}>
-      {/* <FilterPanel
+      <OrFilterPanel
         columnDefs={columnDefs}
         rowData={rowData}
-        applyFilter={applyFilter} /> */}
+        applyFilter={applyFilter} />
       <button onClick={() => setRowData([])}>Updating row data closes the filter panel (setRowData([]))</button>
       <div
         id="myGrid"
@@ -212,18 +212,18 @@ const GridExample = () => {
               //   iconKey: 'columns',
               //   toolPanel: 'agColumnsToolPanel',
               // },
-              {
-                id: 'or-filters',
-                labelDefault: 'OR-filters',
-                labelKey: 'or-filters',
-                iconKey: 'filter',
-                toolPanel: 'orFilterPanel',
-                toolPanelParams: {
-                  columnDefs: columnDefs,
-                  rowData: rowData,
-                  applyFilter: applyFilter,
-                }
-              },
+              // {
+              //   id: 'or-filters',
+              //   labelDefault: 'OR-filters',
+              //   labelKey: 'or-filters',
+              //   iconKey: 'filter',
+              //   toolPanel: 'orFilterPanel',
+              //   toolPanelParams: {
+              //     columnDefs: columnDefs,
+              //     rowData: rowData,
+              //     applyFilter: applyFilter,
+              //   }
+              // },
               {
                 id: 'and-filters',
                 labelDefault: 'AND-filters',
@@ -233,7 +233,7 @@ const GridExample = () => {
               },
 
             ],
-            defaultToolPanel: 'or-filters',
+            defaultToolPanel: 'and-filters',
           }}
           frameworkComponents={{ orFilterPanel: OrFilterPanel }}
 
