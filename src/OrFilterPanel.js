@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import DataContext from './DataContext.js';
 import Select from 'react-select';
-
+import { capatalise } from './_utils.js';
 
 const OrFilterPanel = props => {
-    const [availableFilterOptions, setAvailableFilterOptions] = useState(null);
-    const [selectedFilterOptions, setSelectedFilterOptions] = useState(null);
+    const [availableFilterOptions, setAvailableFilterOptions] = useState({});
+    const [selectedFilterOptions, setSelectedFilterOptions] = useState({});
     const dataContext = React.useContext(DataContext);
 
     useEffect(() => {
@@ -16,6 +16,10 @@ const OrFilterPanel = props => {
             initFilterOptions();
         }
     }, [dataContext.rowData, props.columnDefs]);
+
+    useEffect(() => {
+        applyFilter();
+    }, [selectedFilterOptions])
 
     const initFilterOptions = () => {
         let availableFilterOptions = {};
@@ -36,18 +40,9 @@ const OrFilterPanel = props => {
     }
 
     const selectChangeHandler = (selectedOptions, field) => {
-
         let updatedSelectedFilterOptions = { ...selectedFilterOptions };
         updatedSelectedFilterOptions[field] = selectedOptions.map(option => option.value);
-
         setSelectedFilterOptions(updatedSelectedFilterOptions);
-    }
-
-    const formSubmitHandler = e => {
-        e.preventDefault();
-        console.log('applyingFilter...')
-        applyFilter();
-        return false;
     }
 
     const applyFilter = () => {
@@ -62,7 +57,7 @@ const OrFilterPanel = props => {
                 .filter(row => {
                     // If a row's values contains any selected filter options then pass
                     return Object.entries(row).some(([field, value]) => {
-                        return selectedFilterOptions[field].some(selectedFilters => selectedFilters == value)
+                        return selectedFilterOptions[field].some(selectedFilters => selectedFilters === value)
                     });
                 });
         }
@@ -70,11 +65,8 @@ const OrFilterPanel = props => {
         dataContext.setFilteredRowData(updatedFilteredRowData);
     }
 
-    const capatalise = str => str[0].toUpperCase() + str.slice(1);
-
-
     return (
-        <form onSubmit={formSubmitHandler} >
+        <form >
             <h2>Or-Filter Panel</h2>
             {props.columnDefs.map(({ field }) => availableFilterOptions && availableFilterOptions[field] ? (
                 <div key={field} className="my-form-control">
@@ -87,7 +79,6 @@ const OrFilterPanel = props => {
                 </div>
             ) : null
             )}
-            <button type="submit">Apply Or-Filter</button>
         </form>
     )
 }
