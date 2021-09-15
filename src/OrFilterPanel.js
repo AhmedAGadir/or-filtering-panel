@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DataContext from './DataContext.js';
-import Select from 'react-select';
+import { Select } from "react-select-virtualized";
+// import Select from 'react-select';
 import { capatalise } from './_utils.js';
 
 const OrFilterPanel = props => {
@@ -24,19 +25,15 @@ const OrFilterPanel = props => {
     const initFilterOptions = () => {
         let availableFilterOptions = {};
         let selectedFilterOptions = {};
-
         props.columnDefs.forEach(({ field }) => {
             availableFilterOptions[field] = new Set();
             selectedFilterOptions[field] = [];
         });
-
         dataContext.rowData.forEach(row => {
             Object.entries(row).forEach(([field, value]) => availableFilterOptions[field].add(value))
         });
-
         setAvailableFilterOptions(availableFilterOptions);
         setSelectedFilterOptions(selectedFilterOptions);
-
     }
 
     const selectChangeHandler = (selectedOptions, field) => {
@@ -68,13 +65,14 @@ const OrFilterPanel = props => {
     return (
         <form >
             <h2>Or-Filter Panel</h2>
-            {props.columnDefs.map(({ field }) => availableFilterOptions && availableFilterOptions[field] ? (
+            {props.columnDefs.map(({ field }) => availableFilterOptions[field] ? (
                 <div key={field} className="my-form-control">
                     <label>{capatalise(field)}</label>
                     <Select
-                        options={Array.from(availableFilterOptions[field]).map(option => ({ value: option, label: option }))}
-                        isMulti
-                        onChange={(params) => selectChangeHandler(params, field)}
+                        options={new Array(1000).fill(null).map(() => ({ value: 2, label: 2 }))}
+                    // options={Array.from(availableFilterOptions[field]).map(option => ({ value: option, label: option }))}
+                    // isMulti
+                    // onChange={(params) => selectChangeHandler(params, field)}
                     />
                 </div>
             ) : null
