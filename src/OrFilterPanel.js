@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DataContext from './DataContext.js';
-import { Select } from "react-select-virtualized";
-// import Select from 'react-select';
+// import { Select } from "react-select-virtualized";
+import Select from 'react-select';
 import { capatalise } from './_utils.js';
 
 const OrFilterPanel = props => {
@@ -69,10 +69,10 @@ const OrFilterPanel = props => {
                 <div key={field} className="my-form-control">
                     <label>{capatalise(field)}</label>
                     <Select
-                        options={new Array(1000).fill(null).map(() => ({ value: 2, label: 2 }))}
-                    // options={Array.from(availableFilterOptions[field]).map(option => ({ value: option, label: option }))}
-                    // isMulti
-                    // onChange={(params) => selectChangeHandler(params, field)}
+                        // options={new Array(1000).fill(null).map(() => ({ value: 2, label: 2 }))}
+                        options={Array.from(availableFilterOptions[field]).map(option => ({ value: option, label: option }))}
+                        isMulti
+                        onChange={(params) => selectChangeHandler(params, field)}
                     />
                 </div>
             ) : null
