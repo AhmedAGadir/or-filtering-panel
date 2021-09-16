@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import DataContext from './DataContext.js';
-// import { Select } from "react-select-virtualized";
-import Select from 'react-select';
+// import Select from 'react-select';
+import Select from 'react-select-me';
+import 'react-select-me/lib/ReactSelectMe.css';
+import makeVirtualized from 'react-select-me/lib/hoc/makeVirtualized';
 import { capatalise } from './_utils.js';
+
+const VirtualizedSelect = makeVirtualized(Select);
 
 const OrFilterPanel = props => {
     const [availableFilterOptions, setAvailableFilterOptions] = useState({});
@@ -62,17 +66,31 @@ const OrFilterPanel = props => {
         dataContext.setFilteredRowData(updatedFilteredRowData);
     }
 
+    const searchHandler = (searchStr, field) => {
+        let searchResults = dataContext.rowData
+            .filter(row => row[field].indexOf(searchStr) > -1)
+            .map(row => row[field])
+
+        let updatedAvailableFilterOptions = { ...availableFilterOptions }
+        updatedAvailableFilterOptions[field] = new Set(searchResults);
+
+        setAvailableFilterOptions(updatedAvailableFilterOptions);
+    }
+
     return (
         <form >
             <h2>Or-Filter Panel</h2>
             {props.columnDefs.map(({ field }) => availableFilterOptions[field] ? (
                 <div key={field} className="my-form-control">
                     <label>{capatalise(field)}</label>
-                    <Select
-                        // options={new Array(1000).fill(null).map(() => ({ value: 2, label: 2 }))}
-                        options={Array.from(availableFilterOptions[field]).map(option => ({ value: option, label: option }))}
-                        isMulti
+                    <VirtualizedSelect
+                        multiple
+                        virtualized
+                        options={Array.from(availableFilterOptions[field]).map(value => ({ value, label: value }))}
+                        value={selectedFilterOptions[field].map(value => ({ value, label: value }))}
                         onChange={(params) => selectChangeHandler(params, field)}
+                        searchable
+                        onSearch={params => searchHandler(params, field)}
                     />
                 </div>
             ) : null

@@ -90,7 +90,7 @@ const App = () => {
     fetch('https://www.ag-grid.com/example-assets/olympic-winners.json')
       .then((resp) => resp.json())
       .then((data) => {
-        data = data.slice(0, 1000);
+        // data = data.slice(20, 30);
         let dataCopy = data.map(row => ({ ...row }));
         setRowData(data);
         setFilteredRowData(dataCopy);

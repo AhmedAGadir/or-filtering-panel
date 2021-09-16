@@ -2,54 +2,13 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.ag-tool-panel-wrapper {
-    min-width: 400px;
-}
-
 .ag-tool-panel-wrapper .ag-react-container {
     width: 100%;
 }
 
 form {
-    /* background: lightgrey;
-    padding: 20px;
-    margin: 10px;
-    border-radius: 10px;
-    border: 3px solid dodgerblue; */
-    /* width: 100%; */
     padding: 20px;
 }
-
-/* 
-.my-form-control {
-    margin: 10px 0;
-}
-
-.my-form-control div {
-    margin: 10px 0;
-}
-
-.my-form-control select, .my-form-control input {
-    margin: 0 10px;
-}
-
-.my-form-control .selected-value {
-    background: dodgerblue;
-    color: white;
-    padding: 5px;
-    margin: 5px;
-    border-radius: 5px;
-}
-
-.my-form-control .selected-value .remove-value {
-    cursor: pointer;
-    margin: 0 3px;
-    color: lightgrey;
-}
-
-.my-form-control .selected-value .remove-value:hover {
-    color: grey;
-} */
 
 form label {
     font-size: 14px;
