@@ -66,16 +66,16 @@ const OrFilterPanel = props => {
         dataContext.setFilteredRowData(updatedFilteredRowData);
     }
 
-    const searchHandler = (searchStr, field) => {
-        let searchResults = dataContext.rowData
-            .filter(row => row[field].indexOf(searchStr) > -1)
-            .map(row => row[field])
+    // const searchHandler = (searchStr, field) => {
+    //     let searchResults = dataContext.rowData
+    //         .filter(row => row[field].indexOf(searchStr) > -1)
+    //         .map(row => row[field])
 
-        let updatedAvailableFilterOptions = { ...availableFilterOptions }
-        updatedAvailableFilterOptions[field] = new Set(searchResults);
+    //     let updatedAvailableFilterOptions = { ...availableFilterOptions }
+    //     updatedAvailableFilterOptions[field] = new Set(searchResults);
 
-        setAvailableFilterOptions(updatedAvailableFilterOptions);
-    }
+    //     setAvailableFilterOptions(updatedAvailableFilterOptions);
+    // }
 
     return (
         <form >
@@ -89,8 +89,8 @@ const OrFilterPanel = props => {
                         options={Array.from(availableFilterOptions[field]).map(value => ({ value, label: value }))}
                         value={selectedFilterOptions[field].map(value => ({ value, label: value }))}
                         onChange={(params) => selectChangeHandler(params, field)}
-                        searchable
-                        onSearch={params => searchHandler(params, field)}
+                    // searchable
+                    // onSearch={params => searchHandler(params, field)}
                     />
                 </div>
             ) : null
