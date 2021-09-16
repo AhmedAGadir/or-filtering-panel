@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import DataContext from './DataContext.js';
-// import Select from 'react-select';
+import DataContext from '../DataContext.js';
 import Select from 'react-select-me';
-import 'react-select-me/lib/ReactSelectMe.css';
 import makeVirtualized from 'react-select-me/lib/hoc/makeVirtualized';
-import { capatalise } from './_utils.js';
+import 'react-select-me/lib/ReactSelectMe.css';
+import * as _ from '../_utils.js';
 
 const VirtualizedSelect = makeVirtualized(Select);
 
@@ -66,31 +65,33 @@ const OrFilterPanel = props => {
         dataContext.setFilteredRowData(updatedFilteredRowData);
     }
 
-    // const searchHandler = (searchStr, field) => {
-    //     let searchResults = dataContext.rowData
-    //         .filter(row => row[field].indexOf(searchStr) > -1)
-    //         .map(row => row[field])
+    const searchHandler = (searchStr, field) => {
 
-    //     let updatedAvailableFilterOptions = { ...availableFilterOptions }
-    //     updatedAvailableFilterOptions[field] = new Set(searchResults);
+        debugger;
+        let searchResults = dataContext.rowData
+            .filter(row => row[field] && row[field].toString().indexOf(searchStr) > -1)
+            .map(row => row[field])
 
-    //     setAvailableFilterOptions(updatedAvailableFilterOptions);
-    // }
+        let updatedAvailableFilterOptions = { ...availableFilterOptions }
+        updatedAvailableFilterOptions[field] = new Set(searchResults);
+
+        setAvailableFilterOptions(updatedAvailableFilterOptions);
+    }
 
     return (
         <form >
             <h2>Or-Filter Panel</h2>
             {props.columnDefs.map(({ field }) => availableFilterOptions[field] ? (
                 <div key={field} className="my-form-control">
-                    <label>{capatalise(field)}</label>
+                    <label>{_.capatalise(field)}</label>
                     <VirtualizedSelect
                         multiple
                         virtualized
                         options={Array.from(availableFilterOptions[field]).map(value => ({ value, label: value }))}
                         value={selectedFilterOptions[field].map(value => ({ value, label: value }))}
                         onChange={(params) => selectChangeHandler(params, field)}
-                    // searchable
-                    // onSearch={params => searchHandler(params, field)}
+                        searchable
+                        onSearch={params => searchHandler(params, field)}
                     />
                 </div>
             ) : null

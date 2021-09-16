@@ -2,6 +2,10 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+.ag-tool-panel-wrapper {
+    min-width: 400px;
+}
+
 .ag-tool-panel-wrapper .ag-react-container {
     width: 100%;
 }
