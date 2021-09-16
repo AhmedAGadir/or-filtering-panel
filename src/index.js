@@ -11,12 +11,14 @@ const App = () => {
 
   useEffect(() => {
     fetch('https://www.ag-grid.com/example-assets/olympic-winners.json')
-      .then((resp) => resp.json())
+      .then((res) => res.json())
       .then((data) => {
         setRowData(data);
         let dataCopy = data.map(row => ({ ...row }));
         setFilteredRowData(dataCopy);
-      });
+      })
+      .catch(err => console.log(err));
+
   }, []);
 
   return (
