@@ -45,7 +45,11 @@ const MyGrid = () => {
                     defaultColDef={{
                         flex: 1,
                         minWidth: 100,
-                        filter: true
+                        filter: true,
+                        filterParams: {
+                            newRowsAction: 'keep'
+                        },
+                        menuTabs: ['filterMenuTab', 'generalMenuTab', 'columnsMenuTab']
                     }}
                     columnDefs={columnDefs}
                     onGridReady={onGridReady}
