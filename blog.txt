@@ -1,0 +1,15 @@
+Advanced Custom Filtering - Adding OR Filter Conditions 
+
+Banner
+
+intro:
+- default filtering is AND filtering between columns
+- even if you create a custom column filter - AND filtering will be applied
+- were gonna explore a technique to do all filtering between columns by leveraging immutable data
+
+live example
+
+how it works:
+- custom tool panel component
+- immutable data
+- context

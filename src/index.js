@@ -7,7 +7,7 @@ import DataContext from './DataContext.js';
 
 const App = () => {
   const [rowData, setRowData] = useState([]);
-  const [filteredRowData, setFilteredRowData] = useState([]);
+  const [orFilteredRowData, setOrFilteredRowData] = useState([]);
 
   useEffect(() => {
     fetch('https://www.ag-grid.com/example-assets/olympic-winners.json')
@@ -15,14 +15,14 @@ const App = () => {
       .then((data) => {
         setRowData(data);
         let dataCopy = data.map(row => ({ ...row }));
-        setFilteredRowData(dataCopy);
+        setOrFilteredRowData(dataCopy);
       })
       .catch(err => console.log(err));
 
   }, []);
 
   return (
-    <DataContext.Provider value={{ rowData, filteredRowData, setFilteredRowData }}>
+    <DataContext.Provider value={{ rowData, orFilteredRowData, setOrFilteredRowData }}>
       <MyGrid />
     </DataContext.Provider>
   )

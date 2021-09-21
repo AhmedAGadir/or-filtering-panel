@@ -3,7 +3,7 @@ body {
 }
 
 .ag-tool-panel-wrapper {
-    min-width: 400px;
+    /* min-width: 400px; */
 }
 
 .ag-tool-panel-wrapper .ag-react-container {

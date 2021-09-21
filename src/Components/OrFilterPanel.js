@@ -62,7 +62,7 @@ const OrFilterPanel = props => {
                 });
         }
         // update context
-        dataContext.setFilteredRowData(updatedFilteredRowData);
+        dataContext.setOrFilteredRowData(updatedFilteredRowData);
     }
 
     const searchChangeHandler = (searchStr, field) => {

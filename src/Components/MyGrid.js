@@ -53,13 +53,13 @@ const MyGrid = () => {
                     }}
                     columnDefs={columnDefs}
                     onGridReady={onGridReady}
-                    rowData={dataContext.filteredRowData}
+                    rowData={dataContext.orFilteredRowData}
                     sideBar={{
                         toolPanels: [
                             {
-                                id: 'or-filters',
-                                labelDefault: 'OR-filters',
-                                labelKey: 'or-filters',
+                                id: 'or-filtering',
+                                labelDefault: 'OR-filtering',
+                                labelKey: 'or-filtering',
                                 iconKey: 'filter',
                                 toolPanel: 'orFilterPanel',
                                 toolPanelParams: {
@@ -67,15 +67,15 @@ const MyGrid = () => {
                                 }
                             },
                             {
-                                id: 'and-filters',
-                                labelDefault: 'AND-filters',
-                                labelKey: 'and-filters',
+                                id: 'and-filtering',
+                                labelDefault: 'AND-filtering',
+                                labelKey: 'and-filtering',
                                 iconKey: 'filter',
                                 toolPanel: 'agFiltersToolPanel',
                             },
 
                         ],
-                        defaultToolPanel: 'or-filters',
+                        defaultToolPanel: 'or-filtering',
                     }}
                     frameworkComponents={{ orFilterPanel: OrFilterPanel }}
                 />

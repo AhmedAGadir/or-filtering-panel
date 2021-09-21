@@ -2,8 +2,8 @@ import { createContext } from "react";
 
 const DataContext = createContext({
   rowData: [],
-  filteredRowData: [],
-  setFilteredRowData: () => { }
+  orFilteredRowData: [],
+  setOrFilteredRowData: () => { }
 });
 
 export default DataContext;
