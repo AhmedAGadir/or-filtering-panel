@@ -54,12 +54,11 @@ const OrFilterPanel = props => {
         } else {
             updatedFilteredRowData = dataContext.rowData
                 .map(row => ({ ...row }))
-                .filter(row => {
-                    // If a row's values contains any selected filter options then pass
-                    return Object.entries(row).some(([field, value]) => {
-                        return selectedFilterOptions[field].some(selectedFilters => selectedFilters === value)
-                    });
-                });
+                .filter(row =>
+                    Object.entries(row).some(([field, value]) =>
+                        selectedFilterOptions[field].some(selectedFilters => selectedFilters === value)
+                    )
+                );
         }
         // update context
         dataContext.setOrFilteredRowData(updatedFilteredRowData);
