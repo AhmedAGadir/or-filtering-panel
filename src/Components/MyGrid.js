@@ -31,7 +31,7 @@ const MyGrid = () => {
         setGridColumnApi(params.columnApi);
     };
 
-    const getRowNodeId = data => data.id
+    const getRowNodeId = data => data.id;
 
     return (
         <div style={{ width: '100%', height: '100vh' }}>
