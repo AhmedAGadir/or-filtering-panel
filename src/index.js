@@ -13,6 +13,7 @@ const App = () => {
     fetch('https://www.ag-grid.com/example-assets/olympic-winners.json')
       .then((res) => res.json())
       .then((data) => {
+        data.forEach((row, ind) => row.id = ind);
         setRowData(data);
         let dataCopy = data.map(row => ({ ...row }));
         setOrFilteredRowData(dataCopy);

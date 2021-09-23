@@ -31,6 +31,8 @@ const MyGrid = () => {
         setGridColumnApi(params.columnApi);
     };
 
+    const getRowNodeId = data => data.id
+
     return (
         <div style={{ width: '100%', height: '100vh' }}>
             <div
@@ -54,6 +56,7 @@ const MyGrid = () => {
                     columnDefs={columnDefs}
                     onGridReady={onGridReady}
                     rowData={dataContext.orFilteredRowData}
+                    getRowNodeId={getRowNodeId}
                     sideBar={{
                         toolPanels: [
                             {

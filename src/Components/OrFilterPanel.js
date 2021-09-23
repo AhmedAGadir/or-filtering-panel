@@ -33,7 +33,7 @@ const OrFilterPanel = props => {
             selectedFilterOptions[field] = [];
         });
         dataContext.rowData.forEach(row => {
-            Object.entries(row).forEach(([field, value]) => availableFilterOptions[field].add(value))
+            Object.entries(row).forEach(([field, value]) => availableFilterOptions[field] && availableFilterOptions[field].add(value))
         });
         setAvailableFilterOptions(availableFilterOptions);
         setSelectedFilterOptions(selectedFilterOptions);
@@ -56,7 +56,7 @@ const OrFilterPanel = props => {
                 .map(row => ({ ...row }))
                 .filter(row =>
                     Object.entries(row).some(([field, value]) =>
-                        selectedFilterOptions[field].some(selectedFilters => selectedFilters === value)
+                        selectedFilterOptions[field] && selectedFilterOptions[field].some(selectedFilters => selectedFilters === value)
                     )
                 );
         }
