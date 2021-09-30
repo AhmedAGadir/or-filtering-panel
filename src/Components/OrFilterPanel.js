@@ -35,6 +35,10 @@ const OrFilterPanel = props => {
         dataContext.rowData.forEach(row => {
             Object.entries(row).forEach(([field, value]) => availableFilterOptions[field] && availableFilterOptions[field].add(value))
         });
+        // convert available filter option Sets into sorted arrays
+        Object.entries(availableFilterOptions).forEach(([field, set]) => {
+            availableFilterOptions[field] = [...set].sort();
+        })
         setAvailableFilterOptions(availableFilterOptions);
         setSelectedFilterOptions(selectedFilterOptions);
     }
